@@ -83,3 +83,9 @@ li {
   align-items: center;
   padding: 0.5rem;
 }
+
+.cajafotos{
+  width: 16rem;
+  height: 10rem;
+  object-fit: cover;
+}
