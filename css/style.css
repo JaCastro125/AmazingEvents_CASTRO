@@ -89,3 +89,18 @@ li {
   height: 10rem;
   object-fit: cover;
 }
+
+.cajafotosp{
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.colorbordetabla{
+  border-style: solid;
+  border-color: black;
+}
+
+.titulotabla{
+  background-color: rgb(218, 165, 165);
+}
