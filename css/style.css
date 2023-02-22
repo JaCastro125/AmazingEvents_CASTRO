@@ -70,9 +70,11 @@ body {
   display: flex;
   align-items: flex-start;
 }
+
 li {
   padding: 0px;
 }
+
 .list-group {
   --bs-list-group-item-padding-y: 0rem;
 }
