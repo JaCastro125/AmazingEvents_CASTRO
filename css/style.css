@@ -64,18 +64,18 @@ body {
 
 /*-------------------------------- CARDS -*/
 
-.justificadocards{
+.justificadocards {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
-.j-cards{
+.j-cards {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
 }
-.card-footer{
+.card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -98,13 +98,13 @@ body {
   align-items: flex-start;
 }
 
-.card-body{
+.card-body {
   margin: 0rem !important;
-  padding-bottom: 0rem!important;
+  padding-bottom: 0rem !important;
 }
 
-.card{
-  padding-bottom: 0rem!important;
+.card {
+  padding-bottom: 0rem !important;
 }
 
 /*------------------------------- TABLAS -*/
@@ -147,3 +147,5 @@ li {
 footer {
   margin-top: auto;
 }
+
+/*-------------------------------------------------- DETAILS -*/
