@@ -7,11 +7,18 @@ body {
   align-items: stretch;
   flex-direction: column;
   min-height: 150vh;
-
+  
   border: 5px solid red;
 }
 
-/*------------------------------------------ SLIDER -*/
+/*------------------------------------------------>> NAV MENU SUPERIOR -*/
+
+.menu1{
+  position: absolute;
+  right: 0px;
+}
+
+/*------------------------------------------------>> SLIDER -*/
 
 .colorslider {
   background-color: #e77296;
@@ -49,9 +56,7 @@ body {
   align-items: center;
 }
 
-/*-------------------------------------------------- MAIN-*/
-
-/*---------------------- CAJA DE CHECKBOX -*/
+/*------------------------------------------------>> CAJA DE CHECKBOX -*/
 
 .degradadotop {
   background: rgb(250, 227, 234);
@@ -62,7 +67,7 @@ body {
   );
 }
 
-/*-------------------------------- CARDS -*/
+/*------------------------------------------------>> CARDS -*/
 
 .justificadocards {
   display: flex;
@@ -107,7 +112,7 @@ body {
   padding-bottom: 0rem !important;
 }
 
-/*------------------------------- TABLAS -*/
+/*------------------------------------------------>> TABLAS -*/
 
 .colorbordetabla {
   border-style: solid;
@@ -118,7 +123,7 @@ body {
   background-color: rgb(218, 165, 165);
 }
 
-/*------------------------------- LISTAS -*/
+/*------------------------------------------------>> LISTAS -*/
 
 ul {
   display: flex;
@@ -133,7 +138,7 @@ li {
   --bs-list-group-item-padding-y: 0rem;
 }
 
-/*-------------------------------------------------- NAV FOOTER -*/
+/*------------------------------------------------>> NAV FOOTER -*/
 
 .degradadofooter {
   background: rgb(231, 114, 150);
@@ -148,4 +153,4 @@ footer {
   margin-top: auto;
 }
 
-/*-------------------------------------------------- DETAILS -*/
+/*------------------------------------------------>> DETAILS -*/
