@@ -12,8 +12,9 @@ body {
 /*------------------------------------------------>> NAV MENU SUPERIOR -*/
 
 .menu1{
-  position: absolute;
+  position: relative;
   right: 0px;
+  padding-left: 50%;
 }
 
 /*------------------------------------------------>> SLIDER -*/
