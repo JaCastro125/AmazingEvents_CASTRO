@@ -1,18 +1,23 @@
 import data from "./main.js";
 
-let pastEvents = [];
-function bring(pastEvents) {
+const newCards = document.getElementById('card');
+
+let passEvent = []
+function filtrarTarjetas() {
   for (let i = 0; i < data.events.length; i++) {
-    pastEvents.push(data.events[i]);
+    if (data.events[i].date < data.currentDate) {
+      passEvent.push(data.events[i])
+    }
   }
-  return pastEvents;
+  return passEvent;
 }
 
-const newCards = document.getElementById("card");
-pastEvents = bring(pastEvents);
-let tarjetas = "";
-for (const tarjeta of pastEvents) {
-  tarjetas += `
+let fragmento = document.createDocumentFragment();
+passEvent = filtrarTarjetas(passEvent)
+
+for (const tarjeta of passEvent) {
+  let div = document.createElement("div");
+  div.innerHTML = `
     <div class="card shadow p-3 bg-body-tertiary rounded" style="width: 18rem;">
         <img src="${tarjeta.image}" 
             class="card-img-top cajafotos" 
@@ -31,9 +36,7 @@ for (const tarjeta of pastEvents) {
             </div>
         </div>
     </div>`;
+  fragmento.appendChild(div);
 }
-newCards.innerHTML=tarjetas
 
-
-
-
+newCards.appendChild(fragmento)
