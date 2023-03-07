@@ -1,17 +1,17 @@
 import data from "./main.js";
 
-let pastEvents = [];
-function bring(pastEvents) {
+let upComing = [];
+function bring(upComing) {
   for (let i = 0; i < data.events.length; i++) {
-    pastEvents.push(data.events[i]);
+    upComing.push(data.events[i]);
   }
-  return pastEvents;
+  return upComing;
 }
 
 const newCards = document.getElementById("card");
-pastEvents = bring(pastEvents);
+upComing = bring(upComing);
 let tarjetas = "";
-for (const tarjeta of pastEvents) {
+for (const tarjeta of upComing) {
   tarjetas += `
     <div class="card shadow p-3 bg-body-tertiary rounded" style="width: 18rem;">
         <img src="${tarjeta.image}" 
@@ -33,7 +33,3 @@ for (const tarjeta of pastEvents) {
     </div>`;
 }
 newCards.innerHTML=tarjetas
-
-
-
-
