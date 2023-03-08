@@ -24,15 +24,11 @@ function nuevasTarjetas(array, contenedor){
             alt="${tarjeta.category}">
         <div class="card-body">
             <p class="card-text"><strong>${tarjeta.name}</strong></p>
-            <p class="card-text">Date: ${tarjeta.date}</p>
             <p class="card-text">Description: ${tarjeta.description}</p>
             <p class="card-text">Category: ${tarjeta.category}</p>
             <p class="card-text">Place: ${tarjeta.place}</p>
-            <p class="card-text">Capacity: ${tarjeta.capacity}</p>
-            <p class="card-text">Assistance: ${tarjeta.assistance}</p>
             <div class="card-footer">
-                <small>$ ${tarjeta.price}</small>
-                <a href="../pages/details.html" class="btn btn-primary">Add Cart</a>
+                <a href="../pages/details.html" class="btn btn-primary">More Info</a>
             </div>
         </div>
     </div>`
