@@ -2,12 +2,8 @@ import data from "./main.js";
 
 const queryString = location.search
 const params = new URLSearchParams(queryString)
-const paramString = params.toString();
-console.log(paramString);
 const id = params.get('id')
-console.log(id);
 const tarjeta = data.events.find(evento => evento._id == id)
-console.log(tarjeta);
 const div = document.getElementById("container")
 div.innerHTML = `
         <div class="card mt-3">
