@@ -1,30 +1,4 @@
-import data from "./main.js";
-const events = data.events
-
 const contenedor = document.getElementById('card')
-/* const contenedorCheck = document.getElementById('checkContainer')
-
-contenedorCheck.addEventListener('change', superFiltro)
- */
-/* function superFiltro() {
-    let primerFiltro = filtrarPorTexto(events, input.value)
-    let segundoFiltro = filtrarCategoria(primerFiltro)
-    pintarTarjetas(segundoFiltro)
-} */
-
-/* export function crearCheckBoxes(array) {
-    let arrayCountrys = array.map(tarjeta => tarjeta.category)
-    let setCountry = new Set(arrayCountrys)
-    let arrayChecks = Array.from(setCountry)
-    let checkboxes = ''
-    arrayChecks.forEach(category => {
-        checkboxes += `<div class="form-check">
-                <input class="form-check-input" type="checkbox" id="${category}" value="${category}">
-                <label class="form-check-label" for="${category}">${category}</label>
-              </div>`
-    })
-    contenedorCheck.innerHTML = checkboxes
-} */
 
 export function pintarTarjetas(array) {
     if (array.length == 0) {
@@ -44,7 +18,7 @@ export function pintarTarjetas(array) {
             <p class="card-text">Category: ${tarjeta.category}</p>
             <p class="card-text">Place: ${tarjeta.place}</p>
             <div class="card-footer">
-                <a href="../pages/details.html" class="btn btn-primary">More Info</a>
+                <a href="../pages/details.html?id=${tarjeta._id}" class="btn btn-primary">More Info</a>
             </div>
         </div>
     </div>`
