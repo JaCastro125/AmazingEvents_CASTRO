@@ -1,5 +1,6 @@
 import { pintarTarjetas, filtrarPorTexto, filtrarCategoria  } from "./funcion.js"
 import data from "./main.js";
+
 const events = data.events
 const currentDate = data.currentDate;
 const input = document.querySelector('input')
@@ -27,7 +28,7 @@ function crearCheckBoxes(array) {
     let arrayChecks = Array.from(setCategory)
     let checkboxes = ''
     arrayChecks.forEach(category => {
-        checkboxes += `<div class="form-check">
+        checkboxes += `<div class="form-check me-4">
                 <input class="form-check-input" type="checkbox" id="${category}" value="${category}">
                 <label class="form-check-label" for="${category}">${category}</label>
               </div>`

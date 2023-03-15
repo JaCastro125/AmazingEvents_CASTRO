@@ -3,10 +3,12 @@ import data from "./main.js";
 const queryString = location.search
 const params = new URLSearchParams(queryString)
 const id = params.get('id')
+
 const tarjeta = data.events.find(evento => evento._id == id)
 const div = document.getElementById("container")
+
 div.innerHTML = `
-        <div class="card mt-3">
+        <div class="card mt-3 p-3">
                     <div class="row">
                         <div class="col-3 d-flex flex-wrap align-content-around justify-content-center">
                             <img src="${tarjeta.image}" class="img-fluid" alt="${tarjeta.name}">

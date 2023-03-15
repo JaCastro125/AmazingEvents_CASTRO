@@ -3,7 +3,7 @@ const contenedor = document.getElementById('card')
 export function pintarTarjetas(array) {
     const fragment = document.createDocumentFragment();
     if (array.length === 0) {
-        contenedor.innerHTML = `<h5 class="display-3">No se encontraron coincidencias</h5>`
+        contenedor.innerHTML = `<h5 class="display-3">your search had no matches</h5>`
         return;
     }
     array.forEach(tarjeta => {
@@ -15,7 +15,7 @@ export function pintarTarjetas(array) {
             <img src="${tarjeta.image}" 
                 class="card-img-top cajafotos" 
                 alt="${tarjeta.category}">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column justify-content-between flex-grow-1">
                 <p class="card-text"><strong>${tarjeta.name}</strong></p>
                 <p class="card-text">Description: ${tarjeta.description}</p>
                 <p class="card-text">Category: ${tarjeta.category}</p>
