@@ -1,42 +1,33 @@
 import data from "./main.js";
 
-const events = data.events
+const events = data.events;
+const currentDate = data.currentDate;
+const name = data.events.name;
+const category = data.events.category;
 
 export function tarjetasPasadas() {
-  let passEvent = []
-  for (let i = 0; i < events.length; i++) {
-    if (data.events[i].date < data.currentDate) {
-      passEvent.push(data.events[i])
-    }
-  }
-  return passEvent;
+  return events.filter((event) => event.date < currentDate);
 }
 
 export function tarjetasFuturas() {
-  let upcomingEvent = [] 
-  for (let i = 0; i < events.length; i++) {
-    if (data.events[i].date > data.currentDate) {
-      upcomingEvent.push(data.events[i])
-    }
-  }
-  return upcomingEvent;
+  return events.filter((event) => event.date > currentDate);
 }
 
 export function tarjetasHome() {
-  let home = []
+  let home = [];
   for (let i = 0; i < events.length; i++) {
-      home.push(data.events[i])
+    home.push(data.events[i]);
   }
   return home;
 }
 
-export function nuevasTarjetas(array, contenedor){
-  let fragment = document.createDocumentFragment()
+export function nuevasTarjetas(array, contenedor) {
+  let fragment = document.createDocumentFragment();
 
-  for (let tarjeta of tarjetasFuturas()){
-    let div = document.createElement('div')
-    div.classList = 'card shadow p-3 bg-body-tertiary rounded' 
-    div.style = 'width: 18rem;'
+  tarjetasFuturas().forEach((tarjeta) => {
+    let div = document.createElement("div");
+    div.classList = "card shadow p-3 bg-body-tertiary rounded";
+    div.style = "width: 18rem;";
     div.innerHTML = `
         <img src="${tarjeta.image}" 
             class="card-img-top cajafotos" 
@@ -54,19 +45,19 @@ export function nuevasTarjetas(array, contenedor){
                 <a href="../pages/details.html" class="btn btn-primary">Add Cart</a>
             </div>
         </div>
-    </div>`
-    fragment.appendChild(div)
-  }
-  contenedor.appendChild(fragment)
+    </div>`;
+    fragment.appendChild(div);
+  });
+  contenedor.appendChild(fragment);
 }
 
-export function viejasTarjetas(array, contenedor){
-  let fragment = document.createDocumentFragment()
+export function viejasTarjetas(array, contenedor) {
+  let fragment = document.createDocumentFragment();
 
-  for (let tarjeta of tarjetasFuturas()){
-    let div = document.createElement('div')
-    div.classList = 'card shadow p-3 bg-body-tertiary rounded' 
-    div.style = 'width: 18rem;'
+  tarjetasFuturas().forEach (tarjeta => {
+    let div = document.createElement("div");
+    div.classList = "card shadow p-3 bg-body-tertiary rounded";
+    div.style = "width: 18rem;";
     div.innerHTML = `
         <img src="${tarjeta.image}" 
             class="card-img-top cajafotos" 
@@ -84,19 +75,19 @@ export function viejasTarjetas(array, contenedor){
                 <a href="../pages/details.html" class="btn btn-primary">Add Cart</a>
             </div>
         </div>
-    </div>`
-    fragment.appendChild(div)
-  }
-  contenedor.appendChild(fragment)
+    </div>`;
+    fragment.appendChild(div);
+  })
+  contenedor.appendChild(fragment);
 }
 
-export function todasLasTarjetas(array, contenedor){
-  let fragment = document.createDocumentFragment()
+export function todasLasTarjetas(array, contenedor) {
+  let fragment = document.createDocumentFragment();
 
-  for (let tarjeta of tarjetasHome()){
-    let div = document.createElement('div')
-    div.classList = 'card shadow p-3 bg-body-tertiary rounded' 
-    div.style = 'width: 18rem;'
+  tarjetasHome().forEach(tarjeta => {
+    let div = document.createElement("div");
+    div.classList = "card shadow p-3 bg-body-tertiary rounded";
+    div.style = "width: 18rem;";
     div.innerHTML = `
         <img src="${tarjeta.image}" 
             class="card-img-top cajafotos" 
@@ -110,8 +101,23 @@ export function todasLasTarjetas(array, contenedor){
                 <a href="../pages/details.html" class="btn btn-primary">More Info</a>
             </div>
         </div>
-    </div>`
-    fragment.appendChild(div)
-  }
-  contenedor.appendChild(fragment)
+    </div>`;
+    fragment.appendChild(div);
+  })
+  contenedor.appendChild(fragment);
 }
+
+// Usar filter, foreach, map
+
+// Funcion que filtre busqueda por serch
+// button --> id: boton
+// input --> id: input
+
+/*
+
+*/
+
+// funcion que filtre por checkbox
+
+// funcion que combine ambas anteriores
+

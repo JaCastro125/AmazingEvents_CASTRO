@@ -1,5 +1,36 @@
-import { viejasTarjetas, tarjetasPasadas } from "./functions.js"
+import { pintarTarjetas, filtrarPorTexto, filtrarCategoria  } from "./funcion.js"
+import data from "./main.js";
+const events = data.events
+const currentDate = data.currentDate;
+const input = document.querySelector('input')
 
-const newCards = document.getElementById('card');
+input.addEventListener('input', superFiltro)
 
-let cardnew = viejasTarjetas(tarjetasPasadas, newCards)
+const tarjetasPasadasArray = events.filter((event) => event.date < currentDate);
+
+const contenedorCheck = document.getElementById('checkContainer')
+contenedorCheck.addEventListener('change', superFiltro)
+
+pintarTarjetas(tarjetasPasadasArray)
+
+crearCheckBoxes(tarjetasPasadasArray)
+
+function superFiltro() {
+    let primerFiltro = filtrarPorTexto(tarjetasPasadasArray, input.value)
+    let segundoFiltro = filtrarCategoria(primerFiltro)
+    pintarTarjetas(segundoFiltro)
+}
+
+function crearCheckBoxes(array) {
+    let arrayCategorys = array.map(tarjeta => tarjeta.category)
+    let setCategory = new Set(arrayCategorys)
+    let arrayChecks = Array.from(setCategory)
+    let checkboxes = ''
+    arrayChecks.forEach(category => {
+        checkboxes += `<div class="form-check">
+                <input class="form-check-input" type="checkbox" id="${category}" value="${category}">
+                <label class="form-check-label" for="${category}">${category}</label>
+              </div>`
+    })
+    contenedorCheck.innerHTML = checkboxes
+}
