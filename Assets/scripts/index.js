@@ -1,25 +1,41 @@
-import { pintarTarjetas, filtrarPorTexto, filtrarCategoria  } from "./funcion.js"
-import data from "./main.js";
+import { pintarTarjetas, filtrarPorTexto, filtrarCategoria } from "./funcion.js"
 
-const events = data.events
 const input = document.querySelector('input')
 
-input.addEventListener('input', superFiltro)
+let arrayResults
+
+fetch('../Assets/json/amazing.json')
+    .then((response) => response.json())
+    .then(results => {
+
+        arrayResults = results
+
+        const events = arrayResults.events
+        const currentDate = arrayResults.currentDate
+        const tarjetasPasadasArray = events.filter((event) => event.date < currentDate);
+
+        pintarTarjetas(events)
+
+        crearCheckBoxes(events)
+
+        superFiltro(events)
+
+        input.addEventListener('input', superFiltro)
+
+        function superFiltro(valor) {
+            let primerFiltro = filtrarPorTexto(events, input.value)
+            let segundoFiltro = filtrarCategoria(primerFiltro)
+            pintarTarjetas(segundoFiltro)
+        }
+
+        contenedorCheck.addEventListener('change', superFiltro)
+
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
 const contenedorCheck = document.getElementById('checkContainer')
-
-contenedorCheck.addEventListener('change', superFiltro)
-
-
-pintarTarjetas(events)
-
-crearCheckBoxes(events)
-
-function superFiltro() {
-    let primerFiltro = filtrarPorTexto(events, input.value)
-    let segundoFiltro = filtrarCategoria(primerFiltro)
-    pintarTarjetas(segundoFiltro)
-}
 
 function crearCheckBoxes(array) {
     let arrayCategorys = array.map(tarjeta => tarjeta.category)

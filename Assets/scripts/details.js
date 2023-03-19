@@ -1,13 +1,22 @@
-import data from "./main.js";
+//import data from "./main.js";
 
-const queryString = location.search
-const params = new URLSearchParams(queryString)
-const id = params.get('id')
+let arrayResults
 
-const tarjeta = data.events.find(evento => evento._id == id)
-const div = document.getElementById("container")
+fetch('../Assets/json/amazing.json')
+    .then((response) => response.json())
+    .then(results => {
 
-div.innerHTML = `
+        arrayResults = results
+
+        const events = arrayResults.events
+        const queryString = location.search
+        const params = new URLSearchParams(queryString)
+        const id = params.get('id')
+
+        const tarjeta = events.find(evento => evento._id == id)
+        const div = document.getElementById("container")
+
+        div.innerHTML = `
         <div class="card mt-3 p-3">
                     <div class="row">
                         <div class="col-3 d-flex flex-wrap align-content-around justify-content-center">
@@ -56,4 +65,4 @@ div.innerHTML = `
                     </div>
                 </div>`
 
-
+    })

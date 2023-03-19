@@ -42,4 +42,3 @@ export function filtrarCategoria(array) {
     const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
     return checkedValues.length > 0 ? array.filter(elemento => checkedValues.includes(elemento.category)) : array;
 }
-
