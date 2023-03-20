@@ -1,14 +1,20 @@
-//import data from "./main.js";
-
 let arrayResults
+let Url='../Assets/json/amazing.json'
 
-fetch('../Assets/json/amazing.json')
+//fetch nos permite traer de una Url, en este caso un json, todos los datos
+//la funcion .then nos permite obtener datos del array eventos que se encuentra dentro del json
+fetch(Url)
     .then((response) => response.json())
     .then(results => {
 
         arrayResults = results
 
+        //se crean las constantes para llamarlas de un modo mas facil, acorto caminos
         const events = arrayResults.events
+
+        //este conjunto de constantes y parametros como URLSearchParams, permiten
+        //capturar el id de cada tarjeta para luego comprarlo con los eventos del array que trae
+        //json y presentar el resultado con todos los detalles en details.html
         const queryString = location.search
         const params = new URLSearchParams(queryString)
         const id = params.get('id')

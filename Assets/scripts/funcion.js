@@ -1,16 +1,21 @@
 const contenedor = document.getElementById('card')
 
+//toma un array y mediante un fragment crea las tarjetas que posea ese array
 export function pintarTarjetas(array) {
     const fragment = document.createDocumentFragment();
+    
+    //este id permite en caso de busqueda de paramatros por texto que no concuerden, evite pintar 
+    //tarjetas y enseñe el siguiente mensaje
     if (array.length === 0) {
         contenedor.innerHTML = `<h5 class="display-3">your search had no matches</h5>`
         return
     }
+
+    //este forEach permite dibujar la cantidad de tarjetas que posea el array ingresado
     array.forEach(tarjeta => {
         const card = document.createElement('div')
         card.className = 'card shadow p-3 bg-body-tertiary rounded'
         card.style = 'width: 18rem;'
-
         card.innerHTML = `
             <img src="${tarjeta.image}" 
                 class="card-img-top cajafotos" 
@@ -32,17 +37,20 @@ export function pintarTarjetas(array) {
     contenedor.appendChild(fragment)
 }
 
+//esta funcion permite buscar el texto ingresado en el input y compararlo con los datos de array de las tarjetas
 export function filtrarPorTexto(array, texto) {
     let arrayFiltrado = array.filter(elemento => elemento.name.toLowerCase().includes(texto.toLowerCase()))
     return arrayFiltrado
 }
 
+//esta funcion permite buscar por categorias seleccionadas y compararlas con las categorias de las tarjetas 
 export function filtrarCategoria(array) {
     const checkboxes = document.querySelectorAll("input[type='checkbox']:checked")
     const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value)
     return checkedValues.length > 0 ? array.filter(elemento => checkedValues.includes(elemento.category)) : array
 }
 
+//esta funcion permite encontrar la asistencia de mayor porcentaje de un array, toma como valor base de comparacion el 0
 export function highestAttendancePercentage(evento) {
     let highestAttendancePercentage = 0
     let eventWithHighestAttendancePercentage = null;
@@ -56,6 +64,9 @@ export function highestAttendancePercentage(evento) {
     return eventWithHighestAttendancePercentage
 }
 
+//esta funcion permite encontrar la asistencia de menor porcenate de un array, toma como valor de 
+//comparacion la variable Infinity, permitiendo que el primer valor que lea sea menor y pueda ir 
+//actualizando correctamente
 export function lowestAssistancePercentage(evento) {
     let lowestAssistancePercentage = Infinity
     let eventWithLowestAttendancePercentage = null
@@ -69,10 +80,18 @@ export function lowestAssistancePercentage(evento) {
     return eventWithLowestAttendancePercentage;
 }
 
+//esta funcion permite encontrar el valor maximo dentro de un array, utiliza find para encontrar el 
+//valor y la operacion Math.max para encotrar ese valor maximo del array
 export function findMaxCapacityEvent(evento) {
     return evento.find(event => event.capacity === Math.max(...evento.map(event => event.capacity)))
 }
 
+//esta funcion permite crear un array de objetos que contienen categorias, ganancias y porcentajes.
+//primero creo las propiedades el objeto en valor vacio
+//segundo con un forEach recorro el array para crear las categorias y cargar a cada categoria la ganancia y porcentaje en valores 0
+//tercero dentro del mismo forEach realizo los calculos de ganancia y porcentaje, cálculos que los acumulo
+//cuarto en un nuevo forEach de categorias acumulo lo que le corresponde a cada categoria, llamando a ganancia y porcentaje,
+//este ultimo lo divido por cantidad de tarjetas que posee cada categoria
 export function statsPasado(datos) {
     let categorias = []
     let ganancias = []
@@ -91,11 +110,14 @@ export function statsPasado(datos) {
 
     categorias.forEach(categoria => {
         ganancias[categoria] = ganancias[categoria]
-        porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
+        //porcentajes[categoria] = porcentajes[categoria]
+        porcentajes[categoria] = (porcentajes[categoria] / (datos.filter(dato => dato.category === categoria).length))
     });
 
     return { categorias, ganancias, porcentajes }
 }
+
+//igual que la funcion anterior pero para calcular las estadisticas de eventos futuros
 export function statsFuturo(datos) {
     let categorias = []
     let ganancias = []
@@ -119,6 +141,7 @@ export function statsFuturo(datos) {
     return { categorias, ganancias, porcentajes }
 }
 
+//esta funcion llena la tabla de stats, tanto para eventos pasados como futuros
 export function pintarFilas(dato, constante) {
     let filas = ''
     dato.categorias.forEach(categoria => {
