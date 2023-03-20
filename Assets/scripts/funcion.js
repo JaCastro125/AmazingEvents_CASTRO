@@ -42,3 +42,90 @@ export function filtrarCategoria(array) {
     const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
     return checkedValues.length > 0 ? array.filter(elemento => checkedValues.includes(elemento.category)) : array;
 }
+
+export function highestAttendancePercentage(evento) {
+    let highestAttendancePercentage = 0;
+    let eventWithHighestAttendancePercentage = null;
+    for (let i = 0; i < evento.length; i++) {
+        const attendancePercentage = ((evento[i].assistance || evento[i].estimate)/ evento[i].capacity) * 100;
+        if (attendancePercentage > highestAttendancePercentage) {
+            highestAttendancePercentage = attendancePercentage;
+            eventWithHighestAttendancePercentage = evento[i];
+        }
+    }
+    return eventWithHighestAttendancePercentage;
+}
+
+export function lowestAssistancePercentage(evento) {
+    let lowestAssistancePercentage = Infinity
+    let eventWithLowestAttendancePercentage = null
+    for (let i = 0; i < evento.length; i++) {
+        const assistancePercentage = ((evento[i].assistance || evento[i].estimate )/ evento[i].capacity) * 100
+        if (assistancePercentage < lowestAssistancePercentage) {
+            lowestAssistancePercentage = assistancePercentage
+            eventWithLowestAttendancePercentage = evento[i]
+        }
+    }
+    return eventWithLowestAttendancePercentage;
+}
+
+export function findMaxCapacityEvent(evento) {
+    return evento.find(event => event.capacity === Math.max(...evento.map(event => event.capacity)))
+}
+
+export function statsPasado(datos) {
+    let categorias = []
+    let ganancias = []
+    let porcentajes = []
+
+    datos.forEach(dato => {
+        if (!categorias.includes(dato.category)) {
+            categorias.push(dato.category)
+            ganancias[dato.category] = 0
+            porcentajes[dato.category] = 0
+        }
+        ganancias[dato.category] += dato.price * dato.assistance
+        porcentajes[dato.category] += dato.assistance / dato.capacity * 100;
+    })
+
+    categorias.forEach(categoria => {
+        ganancias[categoria] = ganancias[categoria];
+        porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
+    });
+
+    return { categorias, ganancias, porcentajes };
+}
+export function statsFuturo(datos) {
+    let categorias = []
+    let ganancias = []
+    let porcentajes = []
+
+    datos.forEach(dato => {
+        if (!categorias.includes(dato.category)) {
+            categorias.push(dato.category)
+            ganancias[dato.category] = 0
+            porcentajes[dato.category] = 0
+        }
+        ganancias[dato.category] += dato.price * dato.estimate
+        porcentajes[dato.category] += dato.estimate / dato.capacity * 100;
+    })
+
+    categorias.forEach(categoria => {
+        ganancias[categoria] = ganancias[categoria];
+        porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
+    });
+
+    return { categorias, ganancias, porcentajes };
+}
+export function pintarFilas(dato, constante) {
+    let filas = ''
+    dato.categorias.forEach(categoria => {
+        filas += `
+            <tr>
+                <td>${categoria}</td>
+                <td>$ ${dato.ganancias[categoria].toFixed(2)}</td>
+                <td>${dato.porcentajes[categoria].toFixed(2)} %</td>
+            </tr>`;
+    });
+    constante.innerHTML = filas;
+}
