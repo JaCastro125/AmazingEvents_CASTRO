@@ -53,7 +53,7 @@ fetch('../Assets/json/amazing.json')
                                     </tr>
                                     <tr>
                                         <td>Assistance or Estimate</td>
-                                        <td>${tarjeta.Assistance}</td>
+                                        <td>${tarjeta.assistance || tarjeta.estimate}</td>
                                     </tr>
                                     <tr>
                                         <td>Price</td>

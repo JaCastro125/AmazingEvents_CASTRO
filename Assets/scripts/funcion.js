@@ -4,10 +4,10 @@ export function pintarTarjetas(array) {
     const fragment = document.createDocumentFragment();
     if (array.length === 0) {
         contenedor.innerHTML = `<h5 class="display-3">your search had no matches</h5>`
-        return;
+        return
     }
     array.forEach(tarjeta => {
-        const card = document.createElement('div');
+        const card = document.createElement('div')
         card.className = 'card shadow p-3 bg-body-tertiary rounded'
         card.style = 'width: 18rem;'
 
@@ -38,22 +38,22 @@ export function filtrarPorTexto(array, texto) {
 }
 
 export function filtrarCategoria(array) {
-    const checkboxes = document.querySelectorAll("input[type='checkbox']:checked");
-    const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value);
-    return checkedValues.length > 0 ? array.filter(elemento => checkedValues.includes(elemento.category)) : array;
+    const checkboxes = document.querySelectorAll("input[type='checkbox']:checked")
+    const checkedValues = Array.from(checkboxes).map(checkbox => checkbox.value)
+    return checkedValues.length > 0 ? array.filter(elemento => checkedValues.includes(elemento.category)) : array
 }
 
 export function highestAttendancePercentage(evento) {
-    let highestAttendancePercentage = 0;
+    let highestAttendancePercentage = 0
     let eventWithHighestAttendancePercentage = null;
     for (let i = 0; i < evento.length; i++) {
-        const attendancePercentage = ((evento[i].assistance || evento[i].estimate)/ evento[i].capacity) * 100;
+        const attendancePercentage = ((evento[i].assistance || evento[i].estimate)/ evento[i].capacity) * 100
         if (attendancePercentage > highestAttendancePercentage) {
-            highestAttendancePercentage = attendancePercentage;
+            highestAttendancePercentage = attendancePercentage
             eventWithHighestAttendancePercentage = evento[i];
         }
     }
-    return eventWithHighestAttendancePercentage;
+    return eventWithHighestAttendancePercentage
 }
 
 export function lowestAssistancePercentage(evento) {
@@ -85,15 +85,16 @@ export function statsPasado(datos) {
             porcentajes[dato.category] = 0
         }
         ganancias[dato.category] += dato.price * dato.assistance
-        porcentajes[dato.category] += dato.assistance / dato.capacity * 100;
+        porcentajes[dato.category] += dato.assistance / dato.capacity * 100
+
     })
 
     categorias.forEach(categoria => {
-        ganancias[categoria] = ganancias[categoria];
+        ganancias[categoria] = ganancias[categoria]
         porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
     });
 
-    return { categorias, ganancias, porcentajes };
+    return { categorias, ganancias, porcentajes }
 }
 export function statsFuturo(datos) {
     let categorias = []
@@ -107,16 +108,17 @@ export function statsFuturo(datos) {
             porcentajes[dato.category] = 0
         }
         ganancias[dato.category] += dato.price * dato.estimate
-        porcentajes[dato.category] += dato.estimate / dato.capacity * 100;
+        porcentajes[dato.category] += dato.estimate / dato.capacity * 100
     })
 
     categorias.forEach(categoria => {
-        ganancias[categoria] = ganancias[categoria];
+        ganancias[categoria] = ganancias[categoria]
         porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
-    });
+    })
 
-    return { categorias, ganancias, porcentajes };
+    return { categorias, ganancias, porcentajes }
 }
+
 export function pintarFilas(dato, constante) {
     let filas = ''
     dato.categorias.forEach(categoria => {
@@ -125,7 +127,7 @@ export function pintarFilas(dato, constante) {
                 <td>${categoria}</td>
                 <td>$ ${dato.ganancias[categoria].toFixed(2)}</td>
                 <td>${dato.porcentajes[categoria].toFixed(2)} %</td>
-            </tr>`;
-    });
-    constante.innerHTML = filas;
+            </tr>`
+    })
+    constante.innerHTML = filas
 }
