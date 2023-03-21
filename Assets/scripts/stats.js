@@ -50,6 +50,7 @@ fetch(Url)
         statsFuturo(tarjetasFuturasArray)
         const statsU = statsFuturo(tarjetasFuturasArray)
         pintarFilas(statsU, statsUp)
+
     })
 
     //.catch nos permite detener todo lo que se ejecuta en el .then en caso de que la 

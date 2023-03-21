@@ -3,7 +3,7 @@ const contenedor = document.getElementById('card')
 //toma un array y mediante un fragment crea las tarjetas que posea ese array
 export function pintarTarjetas(array) {
     const fragment = document.createDocumentFragment();
-    
+
     //este id permite en caso de busqueda de paramatros por texto que no concuerden, evite pintar 
     //tarjetas y enseñe el siguiente mensaje
     if (array.length === 0) {
@@ -55,7 +55,7 @@ export function highestAttendancePercentage(evento) {
     let highestAttendancePercentage = 0
     let eventWithHighestAttendancePercentage = null;
     for (let i = 0; i < evento.length; i++) {
-        const attendancePercentage = ((evento[i].assistance || evento[i].estimate)/ evento[i].capacity) * 100
+        const attendancePercentage = ((evento[i].assistance || evento[i].estimate) / evento[i].capacity) * 100
         if (attendancePercentage > highestAttendancePercentage) {
             highestAttendancePercentage = attendancePercentage
             eventWithHighestAttendancePercentage = evento[i];
@@ -71,7 +71,7 @@ export function lowestAssistancePercentage(evento) {
     let lowestAssistancePercentage = Infinity
     let eventWithLowestAttendancePercentage = null
     for (let i = 0; i < evento.length; i++) {
-        const assistancePercentage = ((evento[i].assistance || evento[i].estimate )/ evento[i].capacity) * 100
+        const assistancePercentage = ((evento[i].assistance || evento[i].estimate) / evento[i].capacity) * 100
         if (assistancePercentage < lowestAssistancePercentage) {
             lowestAssistancePercentage = assistancePercentage
             eventWithLowestAttendancePercentage = evento[i]
@@ -96,22 +96,26 @@ export function statsPasado(datos) {
     let categorias = []
     let ganancias = []
     let porcentajes = []
+    let asistencia = []
+    let capacidad = []
 
     datos.forEach(dato => {
         if (!categorias.includes(dato.category)) {
             categorias.push(dato.category)
             ganancias[dato.category] = 0
             porcentajes[dato.category] = 0
+            asistencia[dato.category] = 0
+            capacidad[dato.category] = 0
         }
         ganancias[dato.category] += dato.price * dato.assistance
-        porcentajes[dato.category] += dato.assistance / dato.capacity * 100
+        asistencia[dato.category] += dato.assistance
+        capacidad[dato.category] += dato.capacity
 
     })
 
     categorias.forEach(categoria => {
         ganancias[categoria] = ganancias[categoria]
-        //porcentajes[categoria] = porcentajes[categoria]
-        porcentajes[categoria] = (porcentajes[categoria] / (datos.filter(dato => dato.category === categoria).length))
+        porcentajes[categoria] = asistencia[categoria] / capacidad[categoria] * 100
     });
 
     return { categorias, ganancias, porcentajes }
@@ -122,35 +126,105 @@ export function statsFuturo(datos) {
     let categorias = []
     let ganancias = []
     let porcentajes = []
+    let estimado = []
+    let capacidad = []
 
     datos.forEach(dato => {
         if (!categorias.includes(dato.category)) {
             categorias.push(dato.category)
             ganancias[dato.category] = 0
             porcentajes[dato.category] = 0
+            estimado[dato.category] = 0
+            capacidad[dato.category] = 0
         }
         ganancias[dato.category] += dato.price * dato.estimate
-        porcentajes[dato.category] += dato.estimate / dato.capacity * 100
+        estimado[dato.category] += dato.estimate
+        capacidad[dato.category] += dato.capacity
     })
 
     categorias.forEach(categoria => {
         ganancias[categoria] = ganancias[categoria]
-        porcentajes[categoria] = (porcentajes[categoria] / datos.filter(dato => dato.category === categoria).length)
+        porcentajes[categoria] = estimado[categoria] / capacidad[categoria] * 100
     })
 
     return { categorias, ganancias, porcentajes }
 }
 
 //esta funcion llena la tabla de stats, tanto para eventos pasados como futuros
-export function pintarFilas(dato, constante) {
+export function pintarFilas(dato, contenedor) {
     let filas = ''
     dato.categorias.forEach(categoria => {
         filas += `
-            <tr>
-                <td>${categoria}</td>
-                <td>$ ${dato.ganancias[categoria].toFixed(2)}</td>
-                <td>${dato.porcentajes[categoria].toFixed(2)} %</td>
-            </tr>`
+        <tr>
+        <td>${categoria}</td>
+        <td>$ ${dato.ganancias[categoria].toFixed(2)}</td>
+        <td>${dato.porcentajes[categoria].toFixed(2)} %</td>
+        </tr>`
     })
-    constante.innerHTML = filas
+    contenedor.innerHTML = filas
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+export function calcPercentageAssistanceOrEstimate(array) {
+    let assistances = 0
+    let capacitys = 0
+    array.forEach(event => {
+        capacitys += event.capacity
+        assistances += event.assistance ? event.assistance : event.estimate
+    })
+    return ((assistances / capacitys) * 100)
+}
+ 
+export function calcReveneus(array) {
+    let assistances = 0
+    let prices = 0
+    array.forEach(event => {
+        prices += event.price
+        assistances += event.assistance ? event.assistance : event.estimate
+    })
+    return (assistances * prices)
+}
+ 
+export function calculateMetricsByCategory(array) {
+  const categories = {};
+  array.forEach(event => {
+    if (!categories[event.category]) {
+      categories[event.category] = {
+        capacity: event.capacity,
+        assistance: event.assistance,
+        estimate: event.estimate,
+        price: event.price
+      };
+    } else {
+      categories[event.category].capacity += event.capacity
+      categories[event.category].assistance += event.assistance
+      categories[event.category].estimate += event.estimate
+      categories[event.category].price += event.price
+    }
+  });
+  for (const category in categories) {
+    const metrics = categories[category]
+    metrics.percentageAssistance = calcPercentageAssistanceOrEstimate([metrics])
+    metrics.revenues = calcReveneus([metrics])
+  }
+  return categories;
+}
+*/
