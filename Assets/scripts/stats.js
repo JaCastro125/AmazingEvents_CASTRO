@@ -1,4 +1,4 @@
-import { highestAttendancePercentage, lowestAssistancePercentage, findMaxCapacityEvent, statsPasado, statsFuturo, pintarFilas } from "./funcion.js"
+import { highestAttendancePercentage, lowestAssistancePercentage, findMaxCapacityEvent, stats, pintarFilas } from "./funcion.js"
 
 //constantes que me permiten llamar al hmtl, en especifico a la estructura que los contiene para
 //buscar || agregar
@@ -42,13 +42,13 @@ fetch(Url)
         larger.innerHTML = `${maxCapacityEvent.name}`
 
         //llamo a la funcion para crear el nuevo array y despues pinto las celdas
-        statsPasado(tarjetasPasadasArray)
-        const statsP = statsPasado(tarjetasPasadasArray)
+        stats(tarjetasPasadasArray)
+        const statsP = stats(tarjetasPasadasArray)
         pintarFilas(statsP, statsPass)
         
         //llamo a la funcion para crear el nuevo array y despues pinto las celdas
-        statsFuturo(tarjetasFuturasArray)
-        const statsU = statsFuturo(tarjetasFuturasArray)
+        stats(tarjetasFuturasArray)
+        const statsU = stats(tarjetasFuturasArray)
         pintarFilas(statsU, statsUp)
 
     })

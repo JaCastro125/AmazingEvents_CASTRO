@@ -87,68 +87,34 @@ export function findMaxCapacityEvent(evento) {
 }
 
 //esta funcion permite crear un array de objetos que contienen categorias, ganancias y porcentajes.
-//primero creo las propiedades el objeto en valor vacio
-//segundo con un forEach recorro el array para crear las categorias y cargar a cada categoria la ganancia y porcentaje en valores 0
-//tercero dentro del mismo forEach realizo los calculos de ganancia y porcentaje, cálculos que los acumulo
-//cuarto en un nuevo forEach de categorias acumulo lo que le corresponde a cada categoria, llamando a ganancia y porcentaje,
-//este ultimo lo divido por cantidad de tarjetas que posee cada categoria
-export function statsPasado(datos) {
-    let categorias = []
-    let ganancias = []
-    let porcentajes = []
-    let asistencia = []
-    let capacidad = []
-
-    datos.forEach(dato => {
-        if (!categorias.includes(dato.category)) {
-            categorias.push(dato.category)
-            ganancias[dato.category] = 0
-            porcentajes[dato.category] = 0
-            asistencia[dato.category] = 0
-            capacidad[dato.category] = 0
-        }
-        ganancias[dato.category] += dato.price * dato.assistance
-        asistencia[dato.category] += dato.assistance
-        capacidad[dato.category] += dato.capacity
-
+//primero creamos la funcion stats que toma un array datos
+//segundo utilizamos reduce para formar un objeto con los resultados que se van acumulando en cada iteracion
+export function stats(datos) {
+    const resultado = datos.reduce((resultado, dato) => {
+      const categoria = dato.category
+      // Si la categoría no existe en el objeto resultado, agregarla y establecer sus valores iniciales a cero
+      if (!resultado.categorias.includes(categoria)) {
+        resultado.categorias.push(categoria)
+        resultado.ganancias[categoria] = 0
+        resultado.attendance[categoria] = 0
+        resultado.capacidad[categoria] = 0
+      }
+      // Obtener el valor de asistencia, que puede ser dato.assistance o dato.estimate si dato.assistance es nulo o no está definido
+      const attendances = dato.assistance ?? dato.estimate
+      // Agregar la cantidad de ganancias, asistencia y capacidad a la categoría correspondiente
+      resultado.ganancias[categoria] += dato.price * attendances
+      resultado.attendance[categoria] += attendances
+      resultado.capacidad[categoria] += dato.capacity
+      
+      return resultado
+    }, { categorias: [], ganancias: {}, porcentajes: {}, attendance: {}, capacidad: {} })
+  
+    // Calcular los porcentajes de asistencia para cada categoría y los agrega a la propiedad porcentaje
+    resultado.categorias.forEach(categoria => {
+      resultado.porcentajes[categoria] = resultado.attendance[categoria] / resultado.capacidad[categoria] * 100
     })
-
-    categorias.forEach(categoria => {
-        ganancias[categoria] = ganancias[categoria]
-        porcentajes[categoria] = asistencia[categoria] / capacidad[categoria] * 100
-    });
-
-    return { categorias, ganancias, porcentajes }
-}
-
-//igual que la funcion anterior pero para calcular las estadisticas de eventos futuros
-export function statsFuturo(datos) {
-    let categorias = []
-    let ganancias = []
-    let porcentajes = []
-    let estimado = []
-    let capacidad = []
-
-    datos.forEach(dato => {
-        if (!categorias.includes(dato.category)) {
-            categorias.push(dato.category)
-            ganancias[dato.category] = 0
-            porcentajes[dato.category] = 0
-            estimado[dato.category] = 0
-            capacidad[dato.category] = 0
-        }
-        ganancias[dato.category] += dato.price * dato.estimate
-        estimado[dato.category] += dato.estimate
-        capacidad[dato.category] += dato.capacity
-    })
-
-    categorias.forEach(categoria => {
-        ganancias[categoria] = ganancias[categoria]
-        porcentajes[categoria] = estimado[categoria] / capacidad[categoria] * 100
-    })
-
-    return { categorias, ganancias, porcentajes }
-}
+    return resultado
+  }
 
 //esta funcion llena la tabla de stats, tanto para eventos pasados como futuros
 export function pintarFilas(dato, contenedor) {
