@@ -27,9 +27,6 @@ fetch(Url)
         //llamado a las funciones
         pintarTarjetas(tarjetasPasadasArray)
         crearCheckBoxes(tarjetasPasadasArray)
-        const a = crearCheckBoxes(tarjetasPasadasArray)
-        console.log(a);
-
         superFiltro()
 
         //este evento escucha lo que ingresamos en la barra de search del html
@@ -38,12 +35,13 @@ fetch(Url)
         //este evento escucha si existe algun cambio en los checks
         contenedorCheck.addEventListener('change', superFiltro)
 
-        //esta funcion permite filtrar por checks y search y pintar las tarjetas filtradas
+        //esta funcion permite filtrar por checks y search y pintar las tarjetas filtradas, coloco
+        //esta funcion aqui porque en caso de no seleccionar nada, pinta tarjetas con el array original
+        //caso contrario lo hace con el array filtrado
         function superFiltro() {
             const resultado = filtrarCategoria(filtrarPorTexto(tarjetasPasadasArray, input.value));
             pintarTarjetas(resultado);
         }
-
     })
     //.catch nos permite detener todo lo que se ejecuta en el .then en caso de que la 
     //informacion este corrupta

@@ -35,11 +35,12 @@ fetch(Url)
         //este evento escucha si existe algun cambio en los checks
         contenedorCheck.addEventListener('change', superFiltro)
 
-        //esta funcion permite filtrar por checks y search y pintar las tarjetas filtradas
+        //esta funcion permite filtrar por checks y search y pintar las tarjetas filtradas, coloco
+        //esta funcion aqui porque en caso de no seleccionar nada, pinta tarjetas con el array original
+        //caso contrario lo hace con el array filtrado
         function superFiltro() {
-            let primerFiltro = filtrarPorTexto(tarjetasFuturasArray, input.value)
-            let segundoFiltro = filtrarCategoria(primerFiltro)
-            pintarTarjetas(segundoFiltro)
+            const resultado = filtrarCategoria(filtrarPorTexto(tarjetasFuturasArray, input.value));
+            pintarTarjetas(resultado);
         }
 
     })

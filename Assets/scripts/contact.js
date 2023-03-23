@@ -1,10 +1,12 @@
 //tomo lo ingresado en name, email y message cuando escucho el evento click del boton
 const sendBtn = document.getElementById("send-btn")
+
 sendBtn.addEventListener("click", (event) => {
     event.preventDefault()
     const name = document.getElementById("nameinput").value
     const email = document.getElementById("emailinput").value
     const message = document.getElementById("messaggeinput").value
+
 //creo las condiciones de ingresar name, email y message validos, porque required no funciono =((
     if (name === "" || typeof name !== "string") {
         alert("Please enter a valid name.");
@@ -20,6 +22,7 @@ sendBtn.addEventListener("click", (event) => {
         alert("Please enter a valid message.");
         return;
     }
+
 //uso la palabra reservada mailto para enviar el mail con todo lo capturado al principio
 //%0D%0A%0D%0A se usa por lo leido para hacer un salto de linea
 //luego con windows.location.href llamo al programa de mail por defecto de la pc y envio el mail por ese medio
