@@ -1,4 +1,5 @@
 const contenedor = document.getElementById('card')
+const contenedorCheck = document.getElementById('checkContainer')
 
 //toma un array y mediante un fragment crea las tarjetas que posea ese array
 export function pintarTarjetas(array) {
@@ -37,7 +38,7 @@ export function pintarTarjetas(array) {
     contenedor.appendChild(fragment)
 }
 
-//esta funcion permite buscar el texto ingresado en el input y compararlo con los datos de array de las tarjetas
+//esta funcion permite buscar el texto ingresado en el input y compararlo con los datos del array que se ingrese
 export function filtrarPorTexto(array, texto) {
     let arrayFiltrado = array.filter(elemento => elemento.name.toLowerCase().includes(texto.toLowerCase()))
     return arrayFiltrado
@@ -91,32 +92,35 @@ export function findMaxCapacityEvent(evento) {
 //segundo utilizamos reduce para formar un objeto con los resultados que se van acumulando en cada iteracion
 export function stats(datos) {
     const resultado = datos.reduce((resultado, dato) => {
-      const categoria = dato.category
-      // Si la categoría no existe en el objeto resultado, agregarla y establecer sus valores iniciales a cero
-      if (!resultado.categorias.includes(categoria)) {
-        resultado.categorias.push(categoria)
-        resultado.ganancias[categoria] = 0
-        resultado.attendance[categoria] = 0
-        resultado.capacidad[categoria] = 0
-      }
-      // Obtener el valor de asistencia, que puede ser dato.assistance o dato.estimate si dato.assistance es nulo o no está definido
-      const attendances = dato.assistance ?? dato.estimate
-      // Agregar la cantidad de ganancias, asistencia y capacidad a la categoría correspondiente
-      resultado.ganancias[categoria] += dato.price * attendances
-      resultado.attendance[categoria] += attendances
-      resultado.capacidad[categoria] += dato.capacity
-      
-      return resultado
+        const categoria = dato.category
+        // Si la categoría no existe en el objeto resultado, agregarla y establecer sus valores iniciales a cero
+        if (!resultado.categorias.includes(categoria)) {
+            resultado.categorias.push(categoria)
+            resultado.ganancias[categoria] = 0
+            resultado.attendance[categoria] = 0
+            resultado.capacidad[categoria] = 0
+        }
+        // Obtener el valor de asistencia, que puede ser dato.assistance o dato.estimate si dato.assistance es nulo o no está definido
+        const attendances = dato.assistance ?? dato.estimate
+        // Agregar la cantidad de ganancias, asistencia y capacidad a la categoría correspondiente
+        resultado.ganancias[categoria] += dato.price * attendances
+        resultado.attendance[categoria] += attendances
+        resultado.capacidad[categoria] += dato.capacity
+
+        return resultado
     }, { categorias: [], ganancias: {}, porcentajes: {}, attendance: {}, capacidad: {} })
-  
+
     // Calcular los porcentajes de asistencia para cada categoría y los agrega a la propiedad porcentaje
     resultado.categorias.forEach(categoria => {
-      resultado.porcentajes[categoria] = resultado.attendance[categoria] / resultado.capacidad[categoria] * 100
+        resultado.porcentajes[categoria] = resultado.attendance[categoria] / resultado.capacidad[categoria] * 100
     })
     return resultado
-  }
+}
 
-//esta funcion llena la tabla de stats, tanto para eventos pasados como futuros
+//esta funcion llena la tabla de stats, tanto para eventos pasados como futuros, toma 2 parametros
+//los datos (array) y contenedor(como llenara, en este caso, la tabla)
+//luego recorrer con un forEach todas las categorias del array e inserta (innerHTML), la categoria,
+//la ganancia y el porcentaje
 export function pintarFilas(dato, contenedor) {
     let filas = ''
     dato.categorias.forEach(categoria => {
@@ -130,67 +134,20 @@ export function pintarFilas(dato, contenedor) {
     contenedor.innerHTML = filas
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-export function calcPercentageAssistanceOrEstimate(array) {
-    let assistances = 0
-    let capacitys = 0
-    array.forEach(event => {
-        capacitys += event.capacity
-        assistances += event.assistance ? event.assistance : event.estimate
+//esta funcion nos permite crear los checkboxes basado en crear array de categorias de los eventos
+//con map creamos ese array de categorias
+//con set eliminamos del array anterior las repeticiones
+//luego con ese nuevo array creamos los checkboxes que insertamos con innerHTML
+export function crearCheckBoxes(array) {
+    let arrayCategorys = array.map(tarjeta => tarjeta.category)
+    let setCategory = new Set(arrayCategorys)
+    let arrayChecks = Array.from(setCategory)
+    let checkboxes = ''
+    arrayChecks.forEach(category => {
+        checkboxes += `<div class="form-check me-4">
+                <input class="form-check-input" type="checkbox" id="${category}" value="${category}">
+                <label class="form-check-label" for="${category}">${category}</label>
+              </div>`
     })
-    return ((assistances / capacitys) * 100)
+    contenedorCheck.innerHTML = checkboxes
 }
- 
-export function calcReveneus(array) {
-    let assistances = 0
-    let prices = 0
-    array.forEach(event => {
-        prices += event.price
-        assistances += event.assistance ? event.assistance : event.estimate
-    })
-    return (assistances * prices)
-}
- 
-export function calculateMetricsByCategory(array) {
-  const categories = {};
-  array.forEach(event => {
-    if (!categories[event.category]) {
-      categories[event.category] = {
-        capacity: event.capacity,
-        assistance: event.assistance,
-        estimate: event.estimate,
-        price: event.price
-      };
-    } else {
-      categories[event.category].capacity += event.capacity
-      categories[event.category].assistance += event.assistance
-      categories[event.category].estimate += event.estimate
-      categories[event.category].price += event.price
-    }
-  });
-  for (const category in categories) {
-    const metrics = categories[category]
-    metrics.percentageAssistance = calcPercentageAssistanceOrEstimate([metrics])
-    metrics.revenues = calcReveneus([metrics])
-  }
-  return categories;
-}
-*/
