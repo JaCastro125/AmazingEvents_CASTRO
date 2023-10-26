@@ -43,4 +43,4 @@ fetch(Url)
     //informacion este corrupta
     //.catch((error) => {
     //    console.log(error);
-    });
+    //});
