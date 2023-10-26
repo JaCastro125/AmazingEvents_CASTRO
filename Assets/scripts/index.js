@@ -38,9 +38,10 @@ fetch(Url)
             let segundoFiltro = filtrarCategoria(primerFiltro)
             pintarTarjetas(segundoFiltro)
         }
-    })
+    
     //.catch nos permite detener todo lo que se ejecuta en el .then en caso de que la 
     //informacion este corrupta
     .catch((error) => {
         console.log(error);
+        });
     });
